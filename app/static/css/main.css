@@ -1,0 +1,55 @@
+*,*:before,*::after{
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+}
+
+body {
+    padding-top: 20px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+
+.main-landing{
+    padding-top: 60px;
+    padding-left: 50px;
+    padding-right: 50px;
+    box-sizing:inherit;
+}
+
+footer {
+    margin-bottom: 0px;
+}
+
+.bottom {
+    background-color: rgb(33, 31, 31);
+    color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-top: 30px;
+    justify-content: space-evenly;
+}
+
+.footinfo {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    font-size: 0.8em;
+    padding-left: 10px;
+}
+
+.foothead {
+    font-size: 2em;
+}
+
+.tiny {
+    margin: 15px;
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    font-size: 0.8em;
+}

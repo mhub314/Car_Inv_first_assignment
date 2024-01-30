@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(150), nullable = True, default = '')
     email = db.Column(db.String(150), nullable = False)
     password = db.Column(db.String, nullable = True, default = '')
+    car = db.relationship('Car', backref='owner', lazy=True)
     g_auth_verify = db.Column(db.Boolean, default=False)
     token = db.Column(db.String, default = '', unique = True)
     date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
@@ -55,51 +56,37 @@ class User(db.Model, UserMixin):
         return f'User {self.email} has been added to the database'
     
 
-class Contact(db.Model):
+class Car(db.Model):
     id = db.Column(db.String, primary_key = True)
-    name = db.Column(db.String(150), nullable = False)
-    email = db.Column(db.String(200))
-    phone_number = db.Column(db.String(20))
-    address = db.Column(db.String(200))
-    user_token = db.Column(db.String, db.ForeignKey('user.token'))
+    make = db.Column(db.String(50))
+    model = db.Column(db.String(50))
+    year = db.Column(db.String(10))
+    color = db.Column(db.String(50))
+    interior = db.Column(db.String(50))
+    cost = db.Column(db.String(50))
+    user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable=False)
 
-    def __init__(self, name, email, phone_number, address, user_token, id=''):
+    def __init__(self, make, model, year, color, interior, cost, user_token, id=''):
         self.id = self.set_id()
-        self.name = name
-        self.email = email
-        self.phone_number = phone_number
-        self.address = address
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.interior = interior
+        self.cost = cost
         self.user_token = user_token
 
     def __repr__(self):
-        return f'The following contact has been added for upcoming deals & promotions: {self.name}'
+        return f'The following car has been added'
 
     def set_id(self):
         return (secrets.token_urlsafe())
 
-class ContactSchema(ma.Schema):
+class CarSchema(ma.Schema):
     class Meta:
-        fields = ['id', 'name', 'email', 'phone_number', 'address']
+        fields = ['id', 'make', 'model', 'year', 'color', 'interior', 'cost']
 
-contact_schema = ContactSchema()
-contacts_schema = ContactSchema(many = True)   
+car_schema = CarSchema()
+cars_schema = CarSchema(many = True)   
 
 
-
-class Car_Inventory(db.Model):
-    car_id = db.Column(db.String, primary_key = True)
-    make = db.Column(db.String(150), nullable = False)
-    model = db.Column(db.String(150), nullable = False)
-    year = db.Column(db.String(5))
-    color = db.Column(db.String(20))
-    interior_id = db.Column(db.String(10))
-    user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
-
-    def __init__(self, make, model, year, color, interior_id, user_token, car_id=''):
-        self.car_id = self.set_car_id()
-        self.make = make
-        self.model = model 
-        self.year = year
-        self.color = color
-        self.interior_id = interior_id
-        self.user_token = user_token

@@ -6,7 +6,7 @@ import secrets
 from flask import request, jsonify, json
 import decimal
 
-from models import User
+from models import User, Car
 
 def token_required(our_flask_function):
     @wraps(our_flask_function)
@@ -34,5 +34,4 @@ class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, decimal.Decimal):
             return super(JSONEncoder, self).default(obj)
-        
         

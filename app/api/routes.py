@@ -76,5 +76,6 @@ def update_car(current_user_token, id):
 def delete_car(current_user_token, id):
     car = Car.query.get(id)
     db.session.delete(car)
+    db.session.commit()
     response = car_schema.dump(car)
     return jsonify(response)
